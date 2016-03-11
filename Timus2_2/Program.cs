@@ -10,18 +10,36 @@ namespace Timus2_2
     {
         static void Main(string[] args)
         {
-            int n, m=-2000000000;
-            n=Convert.ToInt32( Console.ReadLine());
-            int[] mass = new int[n+1];
+            int n=1, max=-2000000000;
+            int max_n = 0;
+            int i, j;
+            List<int> numbers = new List<int>();
+            n = Convert.ToInt32(Console.ReadLine());
+            while (n != 0)
+            {
+                numbers.Add(n);
+                n = Convert.ToInt32(Console.ReadLine());
+            }
+            for (i = 0; i < numbers.Count; i++)
+                if (numbers[i] > max_n)
+                    max_n = numbers[i];
+            int[] mass = new int[max_n+1];
             mass[0] = 0;
             mass[1] = 1;
-            for (int i=2; i< n+1; i++)
-            {
+            for (i = 2; i < max_n+1; i++)
+            { 
                 mass[i] = (i % 2 == 0 ? mass[i / 2] : mass[(i - 1) / 2] + mass[(i + 1) / 2]);
-                if (mass[i] > m)
-                    m = mass[i];
             }
-            Console.Write(m);
+            for (i = 0; i < numbers.Count; i++)
+            {
+                for (j = 1; j <= numbers[i]; j++)
+                {
+                    if (mass[j] > max)
+                        max = mass[j];
+                }
+                Console.WriteLine(max);
+                max = 0;
+            }
             Console.ReadKey();
         }
     }
